@@ -176,7 +176,14 @@ for magazine_key, magazine in filtered_magazines.items():
                         + colors.ENDC
                     )
         
-        
+    if not args.quiet:
+        if not download_magazine and not download_magazine_error:
+            print(
+                colors.OK 
+                + 'You are up to date.' 
+                + colors.ENDC
+            )
+            
     if args.books:
         books = {}
 
@@ -212,7 +219,6 @@ for magazine_key, magazine in filtered_magazines.items():
                             url = base_url + tag['href']
                             show_progress = progress_bar if not args.quiet else None
                             urlreq.urlretrieve(url, book_path, show_progress)
-                            download_magazine = True
 
                         except:
                             if not args.quiet:
@@ -221,7 +227,6 @@ for magazine_key, magazine in filtered_magazines.items():
                                     + 'You may need to wait for the free download.'
                                     + colors.ENDC
                                 )
-                            download_magazine_error = True
                         else:
                             if not args.quiet:
                                 print(
@@ -229,14 +234,6 @@ for magazine_key, magazine in filtered_magazines.items():
                                     +'{} book \'{}\' downloaded!'.format(magazine.name, book_name)
                                     + colors.ENDC
                                 )
-
-    if not args.quiet:
-        if not download_magazine and not download_magazine_error:
-            print(
-                colors.OK 
-                + 'You are up to date.' 
-                + colors.ENDC
-            )
 
 if not args.quiet:
     print(
